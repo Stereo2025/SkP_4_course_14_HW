@@ -45,13 +45,10 @@ class TestApi:
         response = app.test_client().get('/movie/9999/to/99999/')
         assert response.status_code == 404
 
-    #  -------- > Помогите пожалуйста с этим тестом. < ---------- #
+    def test_show_by_rating_not_found(self):
+        response = app.test_client().get('/rating/qwerty/')
+        assert response.status_code == 404
 
-    # def test_show_by_rating_not_found(self):
-    #     response = app.test_client().get('/rating/-/')
-    #     assert response.status_code == 404
-
-    # ------------------------------------------------------------ #
     def test_show_by_genre_not_found(self):
         response = app.test_client().get('/genre/qwerty/')
         assert response.status_code == 404
