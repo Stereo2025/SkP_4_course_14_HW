@@ -21,6 +21,10 @@ def find_by_title(title: str) -> dict:
                 """
     cursor.execute(sql_query)
     result = cursor.fetchone()
+
+    if not result:
+        return result
+
     movie = {
         'title': result[0],
         'country': result[1],
@@ -172,7 +176,7 @@ def find_move_for_adult() -> list[dict]:
 #         result = cursor.fetchall()
 #
 #     else:
-#         return 'Неверные данные, необходимо выбрать: children, family или adult'
+#         raise ValueError('Неверные данные, необходимо выбрать: children, family или adult')
 #
 #     movie_list = []
 #     for row in result:

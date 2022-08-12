@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, jsonify, abort
 from database_functions.utils import find_by_title, find_by_release_year, \
-    find_by_listed_in, find_move_for_children, find_move_for_family, find_move_for_adult
+    find_by_listed_in, find_move_for_children, find_move_for_family, find_move_for_adult  # find_by_rating
 
 sql_blueprint = Blueprint('sql_blueprint', __name__)
 
@@ -58,6 +58,7 @@ def show_by_family_adult():
     if not films:
         abort(404)
     return films
+
 
 # @sql_blueprint.get('/rating/<rating_name>/')
 # def show_by_rating(rating_name):

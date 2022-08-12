@@ -33,13 +33,9 @@ class TestApi:
         assert response.status_code == 200, 404
         assert type(response.json) == list, 'Это не список!'
 
-    #  -------- > Помогите пожалуйста с этим тестом. < ---------- #
-
-    # def test_page_index_nof_found(self):
-    #     response = app.test_client().get('/movie/99999/')
-    #     assert response.status_code == 404
-
-    # ------------------------------------------------------------ #
+    def test_page_index_nof_found(self):
+        response = app.test_client().get('/movie/99999/')
+        assert response.status_code == 404
 
     def test_show_by_title_page_not_found(self):
         response = app.test_client().get('/movie/9999/to/99999/')
@@ -52,12 +48,3 @@ class TestApi:
     def test_show_by_genre_not_found(self):
         response = app.test_client().get('/genre/qwerty/')
         assert response.status_code == 404
-
-
-
-
-
-
-
-
-
