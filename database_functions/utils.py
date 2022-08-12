@@ -62,121 +62,20 @@ def find_by_release_year(year_from: int, year_to: int) -> list[dict]:
     return movie_list
 
 
-def find_move_for_children() -> list[dict]:
-    """
-    Шаг 3.
-    Реализует поиск фильмов для детей.
-    :return: Список с фильмами.
-    """
-    sql_query = f"""
-                SELECT title, rating, description
-                FROM netflix
-                WHERE rating = 'G'
-                LIMIT 100
-                """
-    cursor.execute(sql_query)
-    result = cursor.fetchall()
-
-    movie_list = []
-    for row in result:
-        movie = {'title': row[0], 'rating': row[1], 'description': row[2]}
-        movie_list.append(movie)
-
-    return movie_list
-
-
-def find_move_for_family() -> list[dict]:
-    """
-    Шаг 3.
-    Реализует поиск фильмов для семьи.
-    :return: Список с фильмами.
-    """
-    sql_query = f"""
-                SELECT title, rating, description
-                FROM netflix
-                WHERE rating IN ('G', 'PG', 'PG-13')
-                ORDER BY rating DESC
-                LIMIT 100
-                """
-    cursor.execute(sql_query)
-    result = cursor.fetchall()
-
-    movie_list = []
-    for row in result:
-        movie = {'title': row[0], 'rating': row[1], 'description': row[2]}
-        movie_list.append(movie)
-
-    return movie_list
-
-
-def find_move_for_adult() -> list[dict]:
-    """
-    Шаг 3.
-    Реализует поиск фильмов с ограничениями.
-    :return: Список с фильмами.
-    """
-    sql_query = f"""
-                SELECT title, rating, description
-                FROM netflix
-                WHERE rating IN ('R', 'NC-17')
-                ORDER BY rating DESC
-                LIMIT 100
-                """
-    cursor.execute(sql_query)
-    result = cursor.fetchall()
-
-    movie_list = []
-    for row in result:
-        movie = {'title': row[0], 'rating': row[1], 'description': row[2]}
-        movie_list.append(movie)
-
-    return movie_list
-
-
-# def find_by_rating(rating: str) -> list[dict] | str:
+# def find_move_for_children() -> list[dict]:
 #     """
 #     Шаг 3.
-#     Реализует поиск по рейтингу.
-#     :param rating: Параметр поиска.
-#     :return: Возвращает список доступных фильмов согласно введенному рейтингу.
+#     Реализует поиск фильмов для детей.
+#     :return: Список с фильмами.
 #     """
-#
-#     list_rating = ['children', 'family', 'adult']
-#
-#     if rating == list_rating[0]:
-#         sql_query = f"""
-#                     SELECT title, rating, description
-#                     FROM netflix
-#                     WHERE rating = 'G'
-#                     LIMIT 100
-#                     """
-#         cursor.execute(sql_query)
-#         result = cursor.fetchall()
-#
-#     elif rating == list_rating[1]:
-#         sql_query = f"""
-#                     SELECT title, rating, description
-#                     FROM netflix
-#                     WHERE rating IN ('G', 'PG', 'PG-13')
-#                     ORDER BY rating DESC
-#                     LIMIT 100
-#                     """
-#         cursor.execute(sql_query)
-#         result = cursor.fetchall()
-#
-#     elif rating == list_rating[2]:
-#         sql_query = f"""
-#                     SELECT title, rating, description
-#                     FROM netflix
-#                     WHERE rating IN ('R', 'NC-17')
-#                     ORDER BY rating DESC
-#                     LIMIT 100
-#                     """
-#         cursor.execute(sql_query)
-#         result = cursor.fetchall()
-#
-#     else:
-#         raise ValueError('Неверные данные, необходимо выбрать: children, family или adult')
+#     sql_query = f"""
+#                 SELECT title, rating, description
+#                 FROM netflix
+#                 WHERE rating = 'G'
+#                 LIMIT 100
+#                 """
+#     cursor.execute(sql_query)
+#     result = cursor.fetchall()
 #
 #     movie_list = []
 #     for row in result:
@@ -184,6 +83,107 @@ def find_move_for_adult() -> list[dict]:
 #         movie_list.append(movie)
 #
 #     return movie_list
+#
+#
+# def find_move_for_family() -> list[dict]:
+#     """
+#     Шаг 3.
+#     Реализует поиск фильмов для семьи.
+#     :return: Список с фильмами.
+#     """
+#     sql_query = f"""
+#                 SELECT title, rating, description
+#                 FROM netflix
+#                 WHERE rating IN ('G', 'PG', 'PG-13')
+#                 ORDER BY rating DESC
+#                 LIMIT 100
+#                 """
+#     cursor.execute(sql_query)
+#     result = cursor.fetchall()
+#
+#     movie_list = []
+#     for row in result:
+#         movie = {'title': row[0], 'rating': row[1], 'description': row[2]}
+#         movie_list.append(movie)
+#
+#     return movie_list
+#
+#
+# def find_move_for_adult() -> list[dict]:
+#     """
+#     Шаг 3.
+#     Реализует поиск фильмов с ограничениями.
+#     :return: Список с фильмами.
+#     """
+#     sql_query = f"""
+#                 SELECT title, rating, description
+#                 FROM netflix
+#                 WHERE rating IN ('R', 'NC-17')
+#                 ORDER BY rating DESC
+#                 LIMIT 100
+#                 """
+#     cursor.execute(sql_query)
+#     result = cursor.fetchall()
+#
+#     movie_list = []
+#     for row in result:
+#         movie = {'title': row[0], 'rating': row[1], 'description': row[2]}
+#         movie_list.append(movie)
+#
+#     return movie_list
+
+
+def find_by_rating(rating: str) -> list[dict] | None:
+    """
+    Шаг 3.
+    Реализует поиск по рейтингу.
+    :param rating: Параметр поиска.
+    :return: Возвращает список доступных фильмов согласно введенному рейтингу.
+    """
+
+    list_rating = ['children', 'family', 'adult']
+
+    if rating == list_rating[0]:
+        sql_query = f"""
+                    SELECT title, rating, description
+                    FROM netflix
+                    WHERE rating = 'G'
+                    LIMIT 100
+                    """
+        cursor.execute(sql_query)
+        result = cursor.fetchall()
+
+    elif rating == list_rating[1]:
+        sql_query = f"""
+                    SELECT title, rating, description
+                    FROM netflix
+                    WHERE rating IN ('G', 'PG', 'PG-13')
+                    ORDER BY rating DESC
+                    LIMIT 100
+                    """
+        cursor.execute(sql_query)
+        result = cursor.fetchall()
+
+    elif rating == list_rating[2]:
+        sql_query = f"""
+                    SELECT title, rating, description
+                    FROM netflix
+                    WHERE rating IN ('R', 'NC-17')
+                    ORDER BY rating DESC
+                    LIMIT 100
+                    """
+        cursor.execute(sql_query)
+        result = cursor.fetchall()
+
+    else:
+        return None
+
+    movie_list = []
+    for row in result:
+        movie = {'title': row[0], 'rating': row[1], 'description': row[2]}
+        movie_list.append(movie)
+
+    return movie_list
 
 
 def find_by_listed_in(genre: str) -> list[dict]:

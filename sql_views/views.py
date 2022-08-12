@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, jsonify, abort
 from database_functions.utils import find_by_title, find_by_release_year, \
-    find_by_listed_in, find_move_for_children, find_move_for_family, find_move_for_adult  # find_by_rating
+    find_by_listed_in, find_by_rating  # find_move_for_children, find_move_for_family, find_move_for_adult
 
 sql_blueprint = Blueprint('sql_blueprint', __name__)
 
@@ -30,44 +30,44 @@ def show_by_release_year(year_from, year_to):
     return jsonify(films)
 
 
-@sql_blueprint.get('/rating/children/')
-def show_by_children_rating():
-    """ Показывает список фильмов в количестве 100 штук в зависимости от рейтинга """
-
-    films = find_move_for_children()
-    if not films:
-        abort(404)
-    return films
-
-
-@sql_blueprint.get('/rating/family/')
-def show_by_family_rating():
-    """ Показывает список фильмов в количестве 100 штук в зависимости от рейтинга """
-
-    films = find_move_for_family()
-    if not films:
-        abort(404)
-    return films
-
-
-@sql_blueprint.get('/rating/adult/')
-def show_by_family_adult():
-    """ Показывает список фильмов в количестве 100 штук в зависимости от рейтинга """
-
-    films = find_move_for_adult()
-    if not films:
-        abort(404)
-    return films
-
-
-# @sql_blueprint.get('/rating/<rating_name>/')
-# def show_by_rating(rating_name):
+# @sql_blueprint.get('/rating/children/')
+# def show_by_children_rating():
 #     """ Показывает список фильмов в количестве 100 штук в зависимости от рейтинга """
 #
-#     films = find_by_rating(rating_name)
+#     films = find_move_for_children()
 #     if not films:
 #         abort(404)
 #     return films
+#
+#
+# @sql_blueprint.get('/rating/family/')
+# def show_by_family_rating():
+#     """ Показывает список фильмов в количестве 100 штук в зависимости от рейтинга """
+#
+#     films = find_move_for_family()
+#     if not films:
+#         abort(404)
+#     return films
+#
+#
+# @sql_blueprint.get('/rating/adult/')
+# def show_by_family_adult():
+#     """ Показывает список фильмов в количестве 100 штук в зависимости от рейтинга """
+#
+#     films = find_move_for_adult()
+#     if not films:
+#         abort(404)
+#     return films
+
+
+@sql_blueprint.get('/rating/<rating_name>/')
+def show_by_rating(rating_name):
+    """ Показывает список фильмов в количестве 100 штук в зависимости от рейтинга """
+
+    films = find_by_rating(rating_name)
+    if not films:
+        abort(404)
+    return films
 
 
 @sql_blueprint.get('/genre/<genre>/')
